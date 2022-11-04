@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: yhciutil
+Version: 0.2
+Summary: branch manager util
+Home-page: https://github.com/yonghuifan21/yhci-util.git
+Download-URL: https://github.com/yonghuifan21/yhci-util/blob/master/dist/yhciutil-0.2.tar.gz
+Author: yonghuifan21
+Author-email: jackfan1@yonghui.com
+License: MIT
+Keywords: yhciutil,yhci,ciutil
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+License-File: LICENSE.txt
+
+UNKNOWN
+

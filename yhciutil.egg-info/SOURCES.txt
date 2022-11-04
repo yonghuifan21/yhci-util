@@ -1,0 +1,11 @@
+LICENSE.txt
+README.md
+setup.cfg
+setup.py
+yhciutil/__init__.py
+yhciutil/branchmanager.py
+yhciutil.egg-info/PKG-INFO
+yhciutil.egg-info/SOURCES.txt
+yhciutil.egg-info/dependency_links.txt
+yhciutil.egg-info/requires.txt
+yhciutil.egg-info/top_level.txt
