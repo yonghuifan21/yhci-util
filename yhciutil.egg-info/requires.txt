@@ -1,5 +1,3 @@
-shutil
 ruamel.yaml
 datetime
 Repo
-logging

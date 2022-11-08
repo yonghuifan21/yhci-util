@@ -1,9 +1,9 @@
 Metadata-Version: 2.1
 Name: yhciutil
-Version: 0.3
+Version: 0.9
 Summary: branch manager util
 Home-page: https://github.com/yonghuifan21/yhci-util.git
-Download-URL: https://github.com/yonghuifan21/yhci-util/blob/master/dist/yhciutil-0.3.tar.gz
+Download-URL: https://github.com/yonghuifan21/yhci-util/blob/master/dist/yhciutil-0.9.tar.gz
 Author: yonghuifan21
 Author-email: jackfan1@yonghui.com
 License: MIT

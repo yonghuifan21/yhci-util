@@ -1,223 +1,142 @@
-![Python package](https://github.com/gitpython-developers/GitPython/workflows/Python%20package/badge.svg)
-[![Documentation Status](https://readthedocs.org/projects/gitpython/badge/?version=stable)](https://readthedocs.org/projects/gitpython/?badge=stable)
-[![Packaging status](https://repology.org/badge/tiny-repos/python:gitpython.svg)](https://repology.org/metapackage/python:gitpython/versions)
 
-## [Gitoxide](https://github.com/Byron/gitoxide): A peek into the future…
+## [yhci-util](https://github.com/yonghuifan21/yhci-util): 一个多仓库管理插件
 
-I started working on GitPython in 2009, back in the days when Python was 'my thing' and I had great plans with it.
-Of course, back in the days, I didn't really know what I was doing and this shows in many places. Somewhat similar to
-Python this happens to be 'good enough', but at the same time is deeply flawed and broken beyond repair.
+当项目存在多个组件依赖，我们可能有以下需求：
 
-By now, GitPython is widely used and I am sure there is a good reason for that, it's something to be proud of and happy about.
-The community is maintaining the software and is keeping it relevant for which I am absolutely grateful. For the time to come I am happy to continue maintaining GitPython, remaining hopeful that one day it won't be needed anymore.
+  需要在多个组件分别建立开发分支；同步多个组件的远程代码；提交多个组件的代码；合并开发分支到发布分支，并自动打tag
+  
+  以上需求分别基于每个组件进行操作，每项任务都将耗费大量的精力和时间。
 
-More than 15 years after my first meeting with 'git' I am still in excited about it, and am happy to finally have the tools and
-probably the skills to scratch that itch of mine: implement `git` in a way that makes tool creation a piece of cake for most.
+  基于以上需求，开发了yhci-util插件，使用该插件可以很好的解决： 开发分支的创建，开发分支代码拉取，开发分支代码提交，开发分支合并到发布分支并打tag
 
-If you like the idea and want to learn more, please head over to [gitoxide](https://github.com/Byron/gitoxide), an
-implementation of 'git' in [Rust](https://www.rust-lang.org).
 
-## GitPython
+### 环境
 
-GitPython is a python library used to interact with git repositories, high-level like git-porcelain,
-or low-level like git-plumbing.
+- Python >= 3.0
 
-It provides abstractions of git objects for easy access of repository data, and additionally
-allows you to access the git repository more directly using either a pure python implementation,
-or the faster, but more resource intensive _git command_ implementation.
+### 安装
 
-The object database implementation is optimized for handling large quantities of objects and large datasets,
-which is achieved by using low-level structures and data streaming.
-
-### DEVELOPMENT STATUS
-
-This project is in **maintenance mode**, which means that
-
-- …there will be no feature development, unless these are contributed
-- …there will be no bug fixes, unless they are relevant to the safety of users, or contributed
-- …issues will be responded to with waiting times of up to a month
-
-The project is open to contributions of all kinds, as well as new maintainers.
-
-### REQUIREMENTS
-
-GitPython needs the `git` executable to be installed on the system and available
-in your `PATH` for most operations.
-If it is not in your `PATH`, you can help GitPython find it by setting
-the `GIT_PYTHON_GIT_EXECUTABLE=<path/to/git>` environment variable.
-
-- Git (1.7.x or newer)
-- Python >= 3.7
-
-The list of dependencies are listed in `./requirements.txt` and `./test-requirements.txt`.
-The installer takes care of installing them for you.
-
-### INSTALL
-
-If you have downloaded the source code:
+如果你已经下载了最新的源码:
 
     python setup.py install
 
-or if you want to obtain a copy from the Pypi repository:
+或者你可以通过pypi安装
 
-    pip install GitPython
+    pip3 install yhcituil
 
-Both commands will install the required package dependencies.
+这两个命令都将安装所需的包依赖项。
 
-A distribution package can be obtained for manual installation at:
+可以在以下位置获取分发包以进行手动安装
 
-    http://pypi.python.org/pypi/GitPython
+    http://pypi.python.org/pypi/yhciutil
 
-If you like to clone from source, you can do it like so:
+如果你想从源代码克隆，你可以这样做:
+
 
 ```bash
-git clone https://github.com/gitpython-developers/GitPython
-git submodule update --init --recursive
-./init-tests-after-clone.sh
+git https://github.com/yonghuifan21/yhci-util.git
 ```
 
-### Limitations
+### 说明文档
 
-#### Leakage of System Resources
+#### 1. 通过 CreateBranch 创建一个对象，分别有以下四个参数
 
-GitPython is not suited for long-running processes (like daemons) as it tends to
-leak system resources. It was written in a time where destructors (as implemented
-in the `__del__` method) still ran deterministically.
-
-In case you still want to use it in such a context, you will want to search the
-codebase for `__del__` implementations and call these yourself when you see fit.
-
-Another way assure proper cleanup of resources is to factor out GitPython into a
-separate process which can be dropped periodically.
-
-#### Windows support
-
-See [Issue #525](https://github.com/gitpython-developers/GitPython/issues/525).
-
-### RUNNING TESTS
-
-_Important_: Right after cloning this repository, please be sure to have executed
-the `./init-tests-after-clone.sh` script in the repository root. Otherwise
-you will encounter test failures.
-
-On _Windows_, make sure you have `git-daemon` in your PATH. For MINGW-git, the `git-daemon.exe`
-exists in `Git\mingw64\libexec\git-core\`; CYGWIN has no daemon, but should get along fine
-with MINGW's.
-
-Ensure testing libraries are installed.
-In the root directory, run: `pip install -r test-requirements.txt`
-
-To lint, run: `flake8`
-
-To typecheck, run: `mypy -p git`
-
-To test, run: `pytest`
-
-Configuration for flake8 is in the ./.flake8 file.
-
-Configurations for mypy, pytest and coverage.py are in ./pyproject.toml.
-
-The same linting and testing will also be performed against different supported python versions
-upon submitting a pull request (or on each push if you have a fork with a "main" branch and actions enabled).
-
-### Contributions
-
-Please have a look at the [contributions file][contributing].
-
-### INFRASTRUCTURE
-
-- [User Documentation](http://gitpython.readthedocs.org)
-- [Questions and Answers](http://stackexchange.com/filters/167317/gitpython)
-- Please post on stackoverflow and use the `gitpython` tag
-- [Issue Tracker](https://github.com/gitpython-developers/GitPython/issues)
-  - Post reproducible bugs and feature requests as a new issue.
-    Please be sure to provide the following information if posting bugs:
-    - GitPython version (e.g. `import git; git.__version__`)
-    - Python version (e.g. `python --version`)
-    - The encountered stack-trace, if applicable
-    - Enough information to allow reproducing the issue
-
-### How to make a new release
-
-- Update/verify the **version** in the `VERSION` file
-- Update/verify that the `doc/source/changes.rst` changelog file was updated
-- Commit everything
-- Run `git tag -s <version>` to tag the version in Git
-- Run `make release`
-- Close the milestone mentioned in the _changelog_ and create a new one. _Do not reuse milestones by renaming them_.
-- set the upcoming version in the `VERSION` file, usually be
-  incrementing the patch level, and possibly by appending `-dev`. Probably you
-  want to `git push` once more.
-
-### How to verify a release (DEPRECATED)
-
-Note that what follows is deprecated and future releases won't be signed anymore.
-More details about how it came to that can be found [in this issue](https://github.com/gitpython-developers/gitdb/issues/77).
-
-----
-
-Please only use releases from `pypi` as you can verify the respective source
-tarballs.
-
-This script shows how to verify the tarball was indeed created by the authors of
-this project:
+    git： 表示工程仓库地址
+    branch： 表示工程基于哪个主分支新建开发分支，建议指定
+    tag：表示工程基于哪个tag新建开发分支
+    path：表示工程存放的地址
+    n_branch： 开发分支的名字（主工程和组件的）
 
 ```
-curl https://files.pythonhosted.org/packages/09/bc/ae32e07e89cc25b9e5c793d19a1e5454d30a8e37d95040991160f942519e/GitPython-3.1.8-py3-none-any.whl > gitpython.whl
-curl https://files.pythonhosted.org/packages/09/bc/ae32e07e89cc25b9e5c793d19a1e5454d30a8e37d95040991160f942519e/GitPython-3.1.8-py3-none-any.whl.asc >  gitpython-signature.asc
-gpg --verify gitpython-signature.asc gitpython.whl
+     __init__(self,git, branch="master", tag="", path="", n_branch="")
+    
 ```
+#### 2. 通过 init_project 初始化仓库，主要有以下参数 
 
-which outputs
 
-```
-gpg: Signature made Fr  4 Sep 10:04:50 2020 CST
-gpg:                using RSA key 27C50E7F590947D7273A741E85194C08421980C9
-gpg: Good signature from "Sebastian Thiel (YubiKey USB-C) <byronimo@gmail.com>" [ultimate]
-gpg:                 aka "Sebastian Thiel (In Rust I trust) <sebastian.thiel@icloud.com>" [ultimate]
-```
 
-You can verify that the keyid indeed matches the release-signature key provided in this
-repository by looking at the keys details:
+    exception_module_list： 这里面的组件不新建开发分支，保持现有依赖
+    clean_proj: 是否清空主项目地址，首次建议True，其他建议False
 
 ```
-gpg --list-packets ./release-verification-key.asc
+    def init_project(self, exception_module_list=[]):
 ```
 
-You can verify that the commit adding it was also signed by it using:
+    执行init_project内部过程： 
+    1. 基于path新建文件夹用于存放主项目源码，如果path存在会清空
+    2. 基于branch和tag拉取工程代码并放在path中
+    3. 在path中新建modules目录，用于存放组件代码
+    4. 根据PodfileModule.yaml中组件的依赖，新建n_branch分支，如果存在新分支就直接切换，并提交
+    5. 更新PodfileModule.yaml中依赖为分支，更新PodfileLocal .yaml中依赖为路径依赖
+  
+
+#### 3. 通过 pull_modules 拉取开发分支最新代码
+
+    exception_module_list： 这里面的组件不拉取最新代码
 
 ```
-git show --show-signature  ./release-verification-key.asc
+    def pull_modules(self, exception_module_list=[]):
 ```
 
-If you would like to trust it permanently, you can import and sign it:
+
+    执行pull_modules内部过程： 
+    3. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
+    4. 根据PodfileModule.yaml中组件的依赖，先判断是否存在目录， 如果本地没有组件对应目录，就新建目录，并走new_branch()逻辑；存在目录：在当前新分支，直接拉取代码；存在目录：本地不在新分支，异常提示拉取失败，需要手动切换到开发分支
+    5. 更新PodfileModule.yaml中依赖为分支，更新PodfileLocal .yaml中依赖为路径依赖
+    
+    注意：init_project 在项目启动时只需要执行一次，如果第二次执行init_project时，会清空本地仓库地址，导致代码丢失
+   
+   #### 4. 通过 push_modules 拉取开发分支最新代码
+
+    exception_module_list： 这里面的组件不拉取最新代码
 
 ```
-gpg --import ./release-verification-key.asc
-gpg --edit-key 4C08421980C9
-
-> sign
-> save
+    def push_modules(self, exception_module_list=[]):
 ```
 
-### Projects using GitPython
 
-- [PyDriller](https://github.com/ishepard/pydriller)
-- [Kivy Designer](https://github.com/kivy/kivy-designer)
-- [Prowl](https://github.com/nettitude/Prowl)
-- [Python Taint](https://github.com/python-security/pyt)
-- [Buster](https://github.com/axitkhurana/buster)
-- [git-ftp](https://github.com/ezyang/git-ftp)
-- [Git-Pandas](https://github.com/wdm0006/git-pandas)
-- [PyGitUp](https://github.com/msiemens/PyGitUp)
-- [PyJFuzz](https://github.com/mseclab/PyJFuzz)
-- [Loki](https://github.com/Neo23x0/Loki)
-- [Omniwallet](https://github.com/OmniLayer/omniwallet)
-- [GitViper](https://github.com/BeayemX/GitViper)
-- [Git Gud](https://github.com/bthayer2365/git-gud)
+    执行push_modules内部过程： 
+    3. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
+    4. 根据PodfileModule.yaml中组件的依赖，先判断是否存在目录， 如果本地没有组件对应目录，提示异常；存在目录：在当前新分支，直接提交代码；存在目录：本地不在新分支，提示异常，需要手动切换到开发分支
 
-### LICENSE
+ #### 5. 通过 merge_modules 拉取开发分支最新代码
 
-New BSD License. See the LICENSE file.
+    exception_module_list： 这里面的组件不拉取最新代码
 
-[contributing]: https://github.com/gitpython-developers/GitPython/blob/master/CONTRIBUTING.md
+````
+    def merge_modules(self, exception_module_list=[]):
+````
+
+
+    执行merge_modules内部过程： 
+    3. 如果path中不存在tagpath，先在path中新建tagpath目录，用于临时存放组件代码
+    4. 根据PodfileModule.yaml中组件的依赖： clone开发分支代码；如果开发分支版本号大于master分支，那么新的版本号就是开发分支版本号，否则就自增1；更新版本号并提交代码；然后根据新版本号打tag，并提交到远端分支；更新PodfileModule.yaml中的依赖为tag，并清空PodfileLocal .yaml中的文件
+
+    
+### 怎么用
+
+```
+  # 新建一个python 文件
+  # 引入依赖
+  from branchmanager import CreateBranch
+  # 方法调用
+  if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.INFO)
+    cuPath = os.getcwd()
+    fa_path = "../../Desktop/Project/yh-rme-srm-purchase-ios/"
+    project_git = "http://gitlab.yonghui.cn/operation-pc-mid-p/yh-rme-srm-purchase-ios.git"
+    # 分支的名字，如果没有指定将用年月日表示
+    n_branch = "221107"
+
+    cb = CreateBranch(git=project_git, path=fa_path, n_branch=n_branch)
+    # 初始化项目
+    # cb.init_project(clean_proj=False)
+    # 拉取远端代码
+    # cb.pull_modules()
+    # 提交本地代码
+    # cb.push_modules()
+    # 开发完成，合并开发分支打tag
+    cb.merge_modules()
+   
+
+```
