@@ -48,7 +48,7 @@ git https://github.com/yonghuifan21/yhci-util.git
     n_branch： 开发分支的名字（主工程和组件的）
 
 ```
-     __init__(self,git, branch="master", tag="", path="", n_branch="")
+__init__(self,git, branch="master", tag="", path="", n_branch="")
     
 ```
 #### 2. 通过 init_project 初始化仓库，主要有以下参数 
@@ -59,7 +59,7 @@ git https://github.com/yonghuifan21/yhci-util.git
     clean_proj: 是否清空主项目地址，首次建议True，其他建议False
 
 ```
-    def init_project(self, exception_module_list=[]):
+def init_project(self, exception_module_list=[]):
 ```
 
     执行init_project内部过程： 
@@ -72,45 +72,65 @@ git https://github.com/yonghuifan21/yhci-util.git
 
 #### 3. 通过 pull_modules 拉取开发分支最新代码
 
-    exception_module_list： 这里面的组件不拉取最新代码
+   exception_module_list： 这里面的组件不拉取最新代码
 
 ```
-    def pull_modules(self, exception_module_list=[]):
+def pull_modules(self, exception_module_list=[]):
 ```
 
 
     执行pull_modules内部过程： 
-    3. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
-    4. 根据PodfileModule.yaml中组件的依赖，先判断是否存在目录， 如果本地没有组件对应目录，就新建目录，并走new_branch()逻辑；存在目录：在当前新分支，直接拉取代码；存在目录：本地不在新分支，异常提示拉取失败，需要手动切换到开发分支
-    5. 更新PodfileModule.yaml中依赖为分支，更新PodfileLocal .yaml中依赖为路径依赖
+    1. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
+    2. 根据PodfileModule.yaml中组件的依赖，
+
+          先判断是否存在目录， 如果本地没有组件对应目录，就新建目录，并走new_branch()逻辑；
+
+          存在目录：在当前新分支，直接拉取代码；
+
+          存在目录：本地不在新分支，异常提示拉取失败，需要手动切换到开发分支
+
+    3. 更新PodfileModule.yaml中依赖为分支，更新PodfileLocal .yaml中依赖为路径依赖
     
-    注意：init_project 在项目启动时只需要执行一次，如果第二次执行init_project时，会清空本地仓库地址，导致代码丢失
    
-   #### 4. 通过 push_modules 拉取开发分支最新代码
+#### 4. 通过 push_modules 拉取开发分支最新代码
 
     exception_module_list： 这里面的组件不拉取最新代码
 
 ```
-    def push_modules(self, exception_module_list=[]):
+def push_modules(self, exception_module_list=[]):
 ```
 
 
     执行push_modules内部过程： 
-    3. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
-    4. 根据PodfileModule.yaml中组件的依赖，先判断是否存在目录， 如果本地没有组件对应目录，提示异常；存在目录：在当前新分支，直接提交代码；存在目录：本地不在新分支，提示异常，需要手动切换到开发分支
+    1. 如果path中不存在modules，先在path中新建modules目录，用于存放组件代码
+    2. 根据PodfileModule.yaml中组件的依赖，
+
+       先判断是否存在目录， 如果本地没有组件对应目录，提示异常；
+
+       存在目录：在当前新分支，直接提交代码；
+
+       存在目录：本地不在新分支，提示异常，需要手动切换到开发分支
 
  #### 5. 通过 merge_modules 拉取开发分支最新代码
 
     exception_module_list： 这里面的组件不拉取最新代码
 
 ````
-    def merge_modules(self, exception_module_list=[]):
+def merge_modules(self, exception_module_list=[]):
 ````
 
 
     执行merge_modules内部过程： 
-    3. 如果path中不存在tagpath，先在path中新建tagpath目录，用于临时存放组件代码
-    4. 根据PodfileModule.yaml中组件的依赖： clone开发分支代码；如果开发分支版本号大于master分支，那么新的版本号就是开发分支版本号，否则就自增1；更新版本号并提交代码；然后根据新版本号打tag，并提交到远端分支；更新PodfileModule.yaml中的依赖为tag，并清空PodfileLocal .yaml中的文件
+    1. 如果path中不存在tagpath，先在path中新建tagpath目录，用于临时存放组件代码
+    2. 根据PodfileModule.yaml中组件的依赖： 
+
+       clone开发分支代码；
+
+       如果开发分支版本号大于master分支，那么新的版本号就是开发分支版本号，否则就自增1；
+
+       更新版本号并提交代码；然后根据新版本号打tag，并提交到远端分支；
+
+       更新PodfileModule.yaml中的依赖为tag，并清空PodfileLocal .yaml中的文件
 
     
 ### 怎么用
